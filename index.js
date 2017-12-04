@@ -13,7 +13,7 @@ const serialPort = new SerialPort(comPort, {
 
 const sendCode = (code) => {
     console.log("Writing this code to arduino: " + code);
-    const success = serialPort.write(code);
+    const success = serialPort.write("" + code);
     return success;
 }
 
