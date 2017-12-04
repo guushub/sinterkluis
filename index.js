@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const SerialPort = require('serialport');
 
 const expressPort = 8080;
-const comPort = "/dev/ttyACM0"
+const comPort = "/dev/ttyACM0";
 const baudRate = 115200;
 
 const serialPort = new SerialPort(comPort, {
@@ -34,8 +34,8 @@ app.get('/', function(req, res) {
                 res.send("Code doorgestuurd naar Arduino, maar niet ontvangen.");
             }
         } else {
-            res.send("Kon request niet verwerken.")
+            res.send("Kon request niet verwerken.");
         }
     });
 
-app.listen(expressPort, () => console.log(`Sinterkluis listening on ${expressPort}`))
+app.listen(expressPort, () => console.log(`Sinterkluis listening on ${expressPort}`));
