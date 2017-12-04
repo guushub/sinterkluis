@@ -14,7 +14,7 @@ const serialPort = new SerialPort(comPort, {
 const sendCode = (code) => {
     console.log("Writing this code to arduino: " + code);
     const success = serialPort.write(code);
-    console.log(success);
+    return success;
 }
 
 // Start server
@@ -26,7 +26,13 @@ app.get('/', function(req, res) {
         const code = parseInt(req.query.code);
 
         if(code) {
-            res.send("Code doorgestuurd naar Arduino.");
+            
+            const success = sendCode(code);
+            if(success) {
+                res.send("Code doorgestuurd naar Arduino en (waarschijnlijk) ontvangen.");
+            } else {
+                res.send("Code doorgestuurd naar Arduino, maar niet ontvangen.");
+            }
         } else {
             res.send("Kon request niet verwerken.")
         }
