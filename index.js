@@ -12,8 +12,8 @@ const serialPort = new SerialPort(comPort, {
 
 
 const sendCode = (code) => {
-    console.log("Writing this code to arduino: " + code);
-    const success = serialPort.write("" + code);
+    console.log(`Writing this code to arduino: ${code}`);
+    const success = serialPort.write(`${code}`);
     return success;
 }
 
@@ -38,4 +38,4 @@ app.get('/', function(req, res) {
         }
     });
 
-app.listen(expressPort, () => console.log('Sinterkluis listening on ' + expressPort))
+app.listen(expressPort, () => console.log(`Sinterkluis listening on ${expressPort}`))
