@@ -4,15 +4,18 @@ const SerialPort = require('serialport');
 const cors = require('cors');
 
 const expressPort = 8080;
-const comPort = "/dev/ttyACM0";
+// const comPort = "/dev/ttyACM0";
+const comPort = "COM3";
 const baudRate = 115200;
 
 const serialPort = new SerialPort(comPort, {
+
     baudRate: baudRate 
 });
 
 
 const sendCode = (code) => {
+    code = `${code}\n`
     console.log(`Writing this code to arduino: ${code}`);
     const success = serialPort.write(`${code}`);
     return success;
@@ -26,7 +29,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.get('/', function(req, res) {
     
-        const code = parseInt(req.query.code);
+        const code = req.query.code;
 
         if(code) {
             
