@@ -37,9 +37,9 @@ app.post('/api/sinterkluis', function(req, res) {
             
             const success = sendCode(code);
             if(success) {
-                res.send(200, {"success":"Code doorgestuurd naar Arduino en (waarschijnlijk) ontvangen."});
+                res.status(200).send({"success":"Code doorgestuurd naar Arduino en (waarschijnlijk) ontvangen."});
             } else {
-                res.send(500, {"error":"Code doorgestuurd naar Arduino, maar niet ontvangen."});
+                res.status(500).send({"error":"Code doorgestuurd naar Arduino, maar niet ontvangen."});
             }
         } else {
             res.send("Kon request niet verwerken.");
