@@ -42,7 +42,7 @@ app.post('/api/sinterkluis', function(req, res) {
                 res.status(500).send({"error":"Code doorgestuurd naar Arduino, maar niet ontvangen."});
             }
         } else {
-            res.send("Kon request niet verwerken.");
+            res.status(500).send({"error":"wrong input"});
         }
     });
 
