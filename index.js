@@ -27,21 +27,67 @@ app.use(cors());
 app.options('*', cors());
 app.use(bodyParser.urlencoded({ extended: false }));  
 app.use(bodyParser.json());
-app.get('/', function(req, res) {
+
+
+app.post('/api/sinterkluis', function(req, res) {
     
-        const code = req.query.code;
+        const code = req.body.code;
 
         if(code) {
             
             const success = sendCode(code);
             if(success) {
-                res.send("Code doorgestuurd naar Arduino en (waarschijnlijk) ontvangen.");
+                res.send(200, {"success":"Code doorgestuurd naar Arduino en (waarschijnlijk) ontvangen."});
             } else {
-                res.send("Code doorgestuurd naar Arduino, maar niet ontvangen.");
+                res.send(500, {"error":"Code doorgestuurd naar Arduino, maar niet ontvangen."});
             }
         } else {
             res.send("Kon request niet verwerken.");
         }
     });
+
+const allowedExt = [
+    '.js',
+    '.ico',
+    '.css',
+    '.png',
+    '.jpg',
+    '.woff2',
+    '.woff',
+    '.ttf',
+    '.svg',
+    ];
+
+app.get('*', (req, res) => { 
+    if (allowedExt.filter(ext => req.url.indexOf(ext) > 0).length > 0) {
+        res.status(200).sendFile(__dirname + '/public/' + req.url);
+      } else {
+        res.status(200).sendFile(__dirname + '/public/index.html');
+    }
+
+});
+
+// app.get("/assets/:name", function(req, res) {
+//     var options = {
+//         root: __dirname + '/public/',
+//         dotfiles: 'deny',
+//         headers: {
+//             'x-timestamp': Date.now(),
+//             'x-sent': true
+//         }
+//       };
+
+//     var fileName = req.params.name;
+//     // var fileName = "index.html";
+    
+//     res.sendFile(fileName, options, function (err) {
+//         if (err) {
+            
+//             console.error(err);
+//         } else {
+//             console.log('Sent:', fileName);
+//         }
+//     });
+// });
 
 app.listen(expressPort, () => console.log(`Sinterkluis listening on ${expressPort}`));
